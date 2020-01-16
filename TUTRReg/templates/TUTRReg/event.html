@@ -1,0 +1,62 @@
+{% extends 'TUTRReg/base.html' %}
+
+{% block content %}
+    {% if EventDetailList %}
+        <div id="details_table">
+            <h2>Event Details</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>TUTR Surcharge</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>TUTR Coordinator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ EventDetailList.event_name }}</td>
+                    <td>{{ EventDetailList.tutr_surcharge }}</td>
+                    <td>{{ EventDetailList.start_date }}</td>
+                    <td>{{ EventDetailList.end_date }}</td>
+                    <td>{{ EventDetailList.dean }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="details_table">
+            <h2>Class List</h2>
+            <table>
+                <thead>
+                    <tr>
+                    <th>Class Name</th>
+                    <th>Teacher</th>
+                    <th>Class Description</th>
+                    <th>Student Requirements</th>
+                    <th>Class Prerequisites</th>
+                    <th>Class Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for class in class_list %}
+                    <tr>
+                        <td><a href="{% url 'TUTRReg:event_class_detail' class.pk class.class_id.pk%}">{{ class.class_id.class_name }}</a></td>
+                        <td>{{ class.class_id.teacher }}</td>
+                        <td>{{ class.class_id.description }}</td>
+                        <td>{{ class.class_id.student_reqs }}</td>
+                        <td>{{ class.class_id.pre_reqs }}</td>
+                        <td>{{ class.class_id.cost }}</td>
+                        <td class="registration_button">
+                            <form action= {% url 'TUTRReg:register' class.pk class.class_id.pk%} method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Register">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

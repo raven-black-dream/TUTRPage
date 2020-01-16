@@ -1,0 +1,83 @@
+{% extends 'TUTRReg/base.html' %}
+{% block content %}
+    <h2>Frequently asked questions</h2>
+    <div class="section_last">
+        {% block faq %}
+        <h3>
+            How are TUTR credits earned?
+        </h3>
+        <blockquote>
+            <p>
+                Each hour of a class counts as one credit:
+            </p>
+            <table cellspacing="0" class="chart">
+                <tr>
+                  <th scope="col">Course Hours</th>
+                  <th scope="col">Credits Awarded</th>
+                </tr>
+                <tr>
+                  <td>1 hour course</td>
+                  <td>1 credit</td>
+                </tr>
+                <tr class="even">
+                  <td>2 hour course</td>
+                  <td>2 credits</td>
+                </tr>
+                <tr>
+                  <td>3 hour course</td>
+                  <td>3 credits</td>
+                </tr>
+                <tr class="even">
+                  <td>4 hour course</td>
+                  <td>4 credits</td>
+                </tr>
+            </table>
+        </blockquote>
+
+        <h3>
+            I'm focussing on a major. Can my general credits be in any discipline?
+        </h3>
+        <blockquote>
+            <p>
+                Yes, you only need 45 credits to be in your field or in a specific major for your degree.
+            </p>
+        </blockquote>
+
+        <h3>
+            How can I transfer credits from the University of Ithra, Their Highness' University of Avacal, or courses taken at Pennsic War or Estrella War?
+        </h3>
+        <blockquote>
+            <p>
+                Out of the total sixty (60) credits required for your TUTR degree, a maximum of fifteen (15) credits can be transferred from one of the above.  Please <a href="{% url 'TUTRReg:faculty' %}"><strong>get in touch</strong></a> with <a href="mailto:TUTRgovernor@tirrigh.org"><strong>the TUTR Governor</strong></a> for more information.
+            </p>
+        </blockquote>
+
+        <h3>
+            I want to major in a specific area, but I can't find enough credits to complete it. What can I do?
+        </h3>
+        <blockquote>
+            <p>
+                TUTR is your University. If you want to see certain classes or subjects taught, please contact the organizers of upcoming TUTR sessions and ask for what you need. Also -- don't be afraid to teach what you know already.
+            </p>
+        </blockquote>
+
+        <h3>
+            If I teach a class, do I still get credit for it?
+        </h3>
+        <blockquote>
+            <p>
+                Yes. You earn the same credits as a student would. Also, if you teach ten times for TUTR, you are inducted into the Fellowship of the University of Tir Righ.
+            </p>
+        </blockquote>
+
+        <h3>
+            Have a question that wasn't covered?
+        </h3>
+        <blockquote>
+            <p>
+                Please <a href="{% url 'TUTRReg:faculty' %}"><strong>contact the TUTR Governor</strong></a> (e-mail <a href="mailto:TUTRGovernor@tirrigh.org">TUTRGovernor AT tirrigh DOT org</a>) who will be glad to assist you.
+            </p>
+        </blockquote>
+        {% endblock %}
+    </div>
+{% endblock %}

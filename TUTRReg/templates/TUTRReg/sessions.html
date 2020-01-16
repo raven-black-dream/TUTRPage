@@ -1,0 +1,40 @@
+{% extends 'TUTRReg/base.html' %}
+{% block content %}
+    {% if EventList %}
+        <div id="details_table">
+        <h2 align="center">Upcoming Events</h2>
+        <div class="event_list">
+        <table align="center">
+        <thead>
+        <tr class="even">
+            <th>Event Name</th>
+            <th>Branch</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Registration Status</th>
+            <th>TUTR Coordinator</th>
+        </tr>
+        </thead>
+        {% for event in EventList %}
+            <tr>
+            <td><a href="{% url 'TUTRReg:event_detail' event.pk %}">{{ event.event_name }}</a></td>
+            <td>{{ event.branch_id }}</td>
+            <td>{{ event.start_date }}</td>
+            <td>{{ event.end_date }}</td>
+
+            <td>{% if event.closed %}
+                Registration is Closed
+                {% else %}
+                Open for Registration
+                {% endif %}
+            </td>
+            <td>{{ event.dean }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+    {% else %}
+        <p>There are no events coming up</p>
+        </div>
+    {% endif %}
+{% endblock %}

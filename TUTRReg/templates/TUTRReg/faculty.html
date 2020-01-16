@@ -1,0 +1,143 @@
+{% extends 'TUTRReg/base.html' %}
+{% block content %}
+    <h2>
+      University Faculty
+    </h2>
+    <div class="section">
+    {% block faculty %}
+        <table cellspacing="0" class="contacts">
+          <tr class="even">
+            <td>Lord High Steward</td>
+            <td>His Highness, Prince of Tir Righ</td>
+            <td><a href="mailto:prince@tirrigh.org">prince@tirrigh.org</a></td>
+          </tr>
+          <tr>
+            <td>Lady High Steward</td>
+            <td>Her Highness, Princess of Tir Righ</td>
+            <td><a href="mailto:princess@tirrigh.org">princess@tirrigh.org</a></td>
+          </tr>
+          <tr class="even">
+            <td>Governor</td>
+            <td>Baroness Margaret Hamilton of Stirlingshire</td>
+            <td><a href="mailto:TUTRgovernor@tirrigh.org">TUTRgovernor@tirrigh.org</a></td>
+          </tr>
+          <tr>
+            <td>Deputy Governor</td>
+            <td>HL Jaqueline Lafleur</td>
+            <td></td>
+          </tr>
+          <tr class="even">
+            <td>Registrar</td>
+            <td>Lord Saito no Ryoichi Mitsukage</td>
+            <td><a href="mailto:registrar@tirrigh.org">registrar@tirrigh.org</a></td>
+          </tr>
+
+        <tr>
+            <td>Dean for Novus (Newcomers)</td>
+            <td>Mistress Halima al-Rakkasa</td>
+            <td></td>
+          </tr>
+            <tr class="even">
+            <td>Dean for Arts & Sciences</td>
+            <td>HL Taliesin ap Hafgan</td>
+            <td></td>
+          </tr>
+            <tr>
+            <td>Dean for Humanities</td>
+            <td>HL Brynja Kortsdottir</td>
+            <td></td>
+          </tr>
+            <tr class="even">
+            <td>Dean for Marshallate</td>
+            <td>HL Vladimir Andreivich Aleksandrov</td>
+            <td></td>
+          </tr>
+            <tr>
+            <td>Deputy to the Deans</td>
+            <td>HL Maminka the Bohemian</td>
+            <td></td>
+          </tr>
+
+        </table>
+        <p> So what do all these people do?  In a nutshell...</p>
+        <b>Governor</b>
+            <ul><li>University oversight.  Guides and fills all other TUTR roles as needed. Accountable to the Principality. </li>
+                <li>Operations</li>
+                <li>Training</li>
+                <li>Reporting</li>
+            </ul>
+    <b>Deputy Governor</b> - Support for the Governor, training to take over the role as Governor.
+    <p></p>
+    <b>Registrar</b>
+    <ul>
+    <li>Responsible for Student Records, data entry into the system.</li>
+    <li>Database support (delegate office) -  build/maintain the database</li>
+    </ul>
+
+    <b>Deans or Degree Administrators</b>
+    <ul>
+    <li>Each Degree or "school" will have a Dean.  These Deans don't have to be experts on the Degree know who to reach out to for assistance.</li>
+    <li>Helps Session Organizers (Branch Officers and/or TUTR Administrators*) find teachers for a particular subject</li>
+    <li>Reviews teacher evaluations</li>
+    <li>Provides unbiased feedback to teachers (removes who said what before giving feedback)</li>
+    <li>Point of contact for the degree program for all of Tir Righ</li>
+    <li>Point of contact for teachers to ensure that classes taught meet, in general, the credit requirements for a degree.</li>
+    <li>Provides assistance to the Registrar regarding classes tracked in the database</li>
+    <li>Reviews records, makes recommendations to the Governor for degree candidates</li>
+    </ul>
+    {% endblock %}
+    </div>
+    <div class="section">
+    {% block branch %}
+        <h2>Branch Officers</h2>
+        <p><ul>
+            <li>Branch Officers are optional to the local branch and certainly not required.  They are a part of the local branch Council.</li>
+            <li>Local councils can recommend a Branch Officer but the Governor warrants them.  Just like the College of Heralds.</li>
+            <li>Can also be session facilitators or supervise TUTR facilitators.</li>
+            <li>Works with local event stewards to ensure classes are held at events.</li>
+            <li>Can also be session facilitators or supervise TUTR facilitators.</li>
+            <li>Provides reports to the both the local Seneschal(e) and the Governor on local activities quarterly.</li>
+        </ul><br>
+    We will do our best to keep this list as up to date as we can. Please contact the Governor if a change is needed.  Thank you.  Updated September 9, 2017</p>
+        <table cellspacing="0" class="contacts">
+                  <tr class="even">
+            <td>Barony of Seagirt</td>
+            <td>Lord Saito no Ryoichi Mitsukage</td>
+            <td>Effective March 7, 2017</td>
+          </tr>
+          <tr>
+            <td>Shire of Danescome</td>
+            <td>Meclerei merc Taran</td>
+            <td>Effective March 1, 2017</td>
+          </tr>
+
+        <tr class="even">
+            <td>Shire of Ramsgaard</td>
+            <td>HL Sine Gunnsdottir</td>
+            <td>Updated September 9, 2017</td>
+          </tr>
+          <tr>
+            <td>Shire of Lionsdale</td>
+            <td>Emma Taylor</td>
+            <td>Effective September 26, 2018</td>
+          </tr>
+          <tr class="even">
+            <td>Barony of Lions Gate</td>
+            <td>HL Tanikh bint Farida al Bakim</td>
+            <td>Effective February 12, 2018</td>
+          </tr>
+        </table>
+    {% endblock %}
+    </div>
+    <div class="section_last">
+    {% block charter %}
+        <h2>From the University of Tir Righ Charter</h2>
+        <p>
+            It is therefore ordered, and enacted by the count, and the authority thereof, that for the furthering of so good a work and for the purposes aforesaid, from henceforth that the said corporation of Tir Righ, shall be the University of Tir Righ, consisting of at least seven people, to wit, the Lord and Lady High Stewart being the Prince and Princess of Tir Righ, Head Regent, Deputy Regent, and three Deans minimally...
+        </p>
+        <p>
+            In witness whereof, the Court hath caused the seal of An Tir and Tir Righ to be hereunto affixed. Dated the one and seventh day of the eleventh month, called November, anno 40, 2007 in the common year.
+        </p>
+    {% endblock %}
+    </div>
+{% endblock %}

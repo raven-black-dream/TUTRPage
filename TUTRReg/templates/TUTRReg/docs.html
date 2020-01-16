@@ -1,0 +1,31 @@
+{% extends 'TUTRReg/base.html' %}
+{% load static %}
+{% block content %}
+        <h2>TUTR Documents to download</h2>
+        <div class="section">
+        {% block intro %}
+            <p>Below is a list of individual PDF forms available for download. To save a copy to your computer, right-click and 'save link as'.
+        {% endblock %}
+        </div>
+        <div class="section_last">
+        {% block forms %}
+            <dl>
+                <dt><a href="{% static "TUTRReg/forms/TUTR_Forms.zip" %}">TUTR Forms</a></dt>
+                    <dd>A zip file containing all the forms below.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Classes Taken Booklet.pdf' %}">Student Booklet</a></dt>
+                    <dd>A foldable booklet for students to keep track of their classes.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Class Proposal.pdf' %}">Class Proposal</a></dt>
+                    <dd>The new class proposal form for teachers.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Student Registration.pdf' %}">Student Registration</a></dt>
+                    <dd>The form students fill out to register for classes.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Class List.pdf' %}">Class List</a></dt>
+                    <dd>A class registration and attendance sheet for registrars and teachers.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Student Evaluation.pdf' %}">Student Evaluation</a></dt>
+                    <dd>The student evaluation form for a class.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Instructor Evaluation and Reimbursement.pdf' %}">Instructor Evaluation and Reimbursement</a></dt>
+                    <dd>The evaluation and reimbursement form for teachers.</dd>
+                <dt><a href="{% static 'TUTRReg/forms/TUTR Dean Recap and Reimbursement.pdf' %}">Dean Recap and Reimbursement</a></dt>
+                    <dd>The event report and reimbursement request form for Deans and Registrars.</dd>
+            </dl>
+        {% endblock  %}
+{% endblock %}

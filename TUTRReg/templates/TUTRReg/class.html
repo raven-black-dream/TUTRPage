@@ -1,0 +1,16 @@
+{% extends 'TUTRReg/base.html' %}
+{% block content %}
+{% if ClassDetails %}
+    <div id="details_page">
+        <h2>{{ ClassDetails.class_name }}</h2>
+        <h3>{{ ClassDetails.teacher }}</h3>
+        <div>
+            <p>Description: {{ ClassDetails.description }}</p>
+            <p>Prerequisites: {{ ClassDetails.pre_reqs }}</p>
+            <p>Student Requirements: {{ ClassDetails.student_reqs }}</p>
+            <p>Cost: {{ ClassDetails.cost }}</p>
+        </div>
+    </div>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,226 @@
+{% extends 'TUTRReg/base.html' %}
+{% block content %}
+{% load static %}
+
+        <h2>
+            TUTR Diplomas and Degrees
+        </h2>
+        <div class="section">
+        {% block intro %}
+            <p>
+                The University of Tir Righ currently offers one Diploma and thirteen Majors within the three main Degrees; Arts &amp; Sciences, Humanities and Marshallate. To earn the Novus Diploma, a student must take the ten core classes listed below. To earn a Degree, students must complete 45 credits in their area of interest, plus 15 additional elective credits.
+            </p>
+            <p>
+                For enquiries regarding the transfer of credits from other institutions, or to check eligibility for a Degree, <a href="{% url 'TUTRReg:faculty' %}">contact</a> the appropriate Dean.
+        {% endblock %}
+        </div>
+        <div class="section">
+        {% block novus %}
+            <h2>
+                <img src="{% static 'TUTRReg/northernregion.gif' %}" class="tutr_badge" alt="Tir Righ populace badge">TUTR Novus or Newcomers' Diploma
+            </h2>
+            <p>
+                The Novus Diploma is the only TUTR program with a list of required courses.
+            </p>
+            <p>
+                This diploma is designed to be taught and achieved over one or two &quot;newcomers' weekends&quot; as an introduction to the SCA. &quot;Newcomers' weekends&quot; also help you discover everything you need to know to get started in your new life in the SCA.
+            </p>
+			<p> <h3><strong>Novus I - Getting started in the SCA</strong></h3> <br>
+			(one hour classes; six in total, a brief guide to SCA life)
+			</p>
+            <ol>
+                <li>Basic clothing: What can I wear?</li>
+                <li>Keeping busy: What to do in the SCA</li>
+                <li>Basic Research and Documentation</li>
+                <li>Chivalry and Etiquette: How to behave in the SCA</li>
+                <li>Events: Surviving and thriving</li>
+                <li>SCA structure: How does the SCA work?</li>
+                <li>Identity crisis: What is a persona?</li>
+            </ol>
+			<p> <h3><strong>Novus II - Next steps in the SCA</strong></h3> <br>
+			(two hour classes; with more depth)
+			</p>
+			<p><b>Part A Core Courses</b>:  All courses in this section are required for the NOVUS II diploma
+            <ol>
+                <li>Introduction to Medieval Clothing (AKA Garb)</li>
+                <li>Introduction to Heraldry and Heraldic display</li>
+                <li>Introduction to Medieval Food and Feasting</li>
+                <li>History of SCA Terminology: The Stuff They Don't Tell You At Your First Event</li>
+                <li>Next steps in Persona Development</li>
+                <li>Introduction to SCA Camping</li>
+            </ol>
+			<p><b>Part B Martial Arts</b>:  Pick a minimum of ONE from this section
+            <ol>
+                <li>Introduction to Heavily Armoured Combat (Heavy fighting)</li>
+                <li>Introduction to Lightly Armoured Combat (Rapier, Cut & Thrust)</li>
+                <li>Introduction to Archery</li>
+            </ol>
+			<p><b>Part C Entertainment</b>:  Pick a minimum of ONE from this section
+            <ol>
+                <li>Introduction to Bardic Arts</li>
+                <li>Introduction to Medieval Games</li>
+                <li>Introduction to Medieval Dance</li>
+            </ol>
+        {% endblock %}
+        </div>
+
+        <div class="section">
+        {% block artsci %}
+            <h2>
+                <img src="{% static 'TUTRReg/northernregion.gif' %}" class="tutr_badge" alt="Tir Righ populace badge">TUTR Arts and Sciences Degrees
+            </h2>
+            <p>
+                Welcome to the new and exciting world of &ldquo;no required courses&rdquo;! For an Arts and Sciences degree, you can choose whether to go in for a general Arts and Sciences degree or specialize in a major (see below). Either way, you&rsquo;ll need to achieve sixty (60) credits. A maximum of fifteen (15) credits can be transfer credits.
+            </p>
+
+            <h3><strong>Arts and Sciences Degree, General Studies</strong></h3>
+            <blockquote>
+              <p>
+                  Complete 45 credits of any of the Arts and Sciences classes below, and 15 general credits (60 credits total).
+              </p>
+            </blockquote>
+
+            <h3>Arts and Sciences Degree, Culinary Arts Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Culinary Arts classes, and 15 general credits (60 credits total).<br>
+                    Culinary Arts classes include: Brewing, vinting, cooking, baking, etc.
+                </p>
+            </blockquote>
+
+            <h3>Arts and Sciences Degree, Fine Arts Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Fine Arts classes, and 15 general credits (60 credits total).<br>
+                    Fine Arts classes include: Calligraphy, illumination, painting, sculpting, stained glass, games and toys, etc.
+                </p>
+            </blockquote>
+
+            <h3>Arts and Sciences Degree, Textile Arts Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Textile Arts classes, and 15 general credits (60 credits total).<br>
+                    Textile Arts classes include: Weaving, garb, felting, needlework, dyeing, spinning, lace-making, knitting, etc.
+                </p>
+            </blockquote>
+
+            <h3>Arts and Sciences Degree, Performance Arts Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Performance Arts classes, and 15 general credits (60 credits total).<br>
+                    Performance Arts classes include: Bardic, dancing, poetry recital, vocal performance, instrumental performance, etc.
+                </p>
+            </blockquote>
+
+            <h3>Arts and Sciences Degree, Sciences Major </h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Sciences classes, and 15 general credits (60 credits total).<br>
+                    Sciences classes include: Bookbinding, ceramics, chandlery, enamelling, blown glass, leatherwork, metalwork and jewellery, tent making, wood work, etc. <br><em>Please note that armour and weaponry classes are found under the Marshallate degrees.</em>
+                </p>
+            </blockquote>
+        {% endblock %}
+        </div>
+
+        <div class="section">
+        {% block humanities %}
+            <h2>
+                <img src="{% static 'TUTRReg/northernregion.gif' %}" class="tutr_badge" alt="Tir Righ populace badge">TUTR Humanities Degrees
+            </h2>
+            <p>
+                The Humanities studies focus on general and intellectual knowledge, rather than professional or occupational skills.
+            </p>
+            <p>
+                For a Humanities degree you can choose whether to complete a general Humanities degree or to specialize in a major. Either way, you&rsquo;ll need to achieve six (60) credits. A maximum of 15 can be transfer credits.
+            </p>
+
+            <h3>Humanities Degree, General Studies</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of any of the Humanities classes below, and 15 general credits (60 credits total).
+                </p>
+            </blockquote>
+
+            <h3>Humanities Degree, History Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of History classes, and 15 general credits (60 credits total).
+                </p>
+            </blockquote>
+
+            <h3>Humanities Degree, Philosophy Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of any Philosophy, and 15 general credits (60 credits total).
+                </p>
+            </blockquote>
+
+            <h3>Humanities Degree, Cultural Aspects of Society Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of History classes, and 15 general credits (60 credits total).
+               </p>
+            </blockquote>
+
+            <h3>Humanities Degree, SCA Society and Service Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of SCA Society and Service classes, and 15 general credits (60 credits total).
+                </p>
+            </blockquote>
+        {% endblock %}
+        </div>
+
+        <div class="section_last">
+        {% block marshallate %}
+            <h2>
+                <img src="{% static 'TUTRReg/northernregion.gif' %}" class="tutr_badge" alt="Tir Righ populace badge">TUTR Marshallate Degrees
+            </h2>
+            <p>
+                The Marshallate studies focus on the combat arts: combat training, equipment, heraldry, and administration.
+            </p>
+            <p>
+                For a Marshallate degree you can choose whether to complete a general Mashallate degree or specialize in a major. Either way, you&rsquo;ll need to achieve sixty (60) credits. A maximum of 15 can be transfer credits.
+            </p>
+
+            <h3>Marshallate Degree, General Studies</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of any of the Marshallate classes below, and 15 general credits (60 credits total).
+                </p>
+            </blockquote>
+
+            <h3>Marshallate Degree, Combat Arts Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Combat Arts classes, and 15 general credits (60 credits total).<br>
+                    Combat Art classes include: Historical fighting techniques, SCA fighting techniques (heavy fighting, fencing\rapier), armouring, weaponry, weaponry construction, tactics and strategies for armed and unarmed combat, tournaments and wars.
+                </p>
+            </blockquote>
+
+            <h3>Marshallate Degree, Archery Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Archery classes, and 15 general credits (60 credits total).<br>
+                    Archery classes include: Combat archery, target archery, historical archery theory, archery equipment, and thrown weapons.
+                </p>
+            </blockquote>
+
+            <h3>Marshallate Degree, Animals Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Animals classes, and 15 general credits (60 credits total).<br>
+                    Animals classes include: Hounds coursing, equestrian activities, falconry, and animal husbandry.
+                </p>
+            </blockquote>
+
+            <h3>Marshallate Degree, Heraldry Major</h3>
+            <blockquote>
+                <p>
+                    Complete 45 credits of Heraldry classes, and 15 general credits (60 credits total).<br>
+                    Heraldry classes include: Book heraldry, voice heraldry, field heraldry or court heraldry.
+                </p>
+            </blockquote>
+        {% endblock %}
+        </div>
+{% endblock %}

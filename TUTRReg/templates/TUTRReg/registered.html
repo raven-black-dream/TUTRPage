@@ -1,0 +1,13 @@
+{% extends 'TUTRReg/base.html' %}
+{% block extrahead %}{{ block.super }}
+    <script type="text/javascript">
+        setTimeout(function() {
+            window.location.href = {% url 'TUTRReg:event_detail' event %};
+        }, 2000);
+    </script>
+{% endblock %}
+{% block content %}
+    <div>
+    <p>Thank you for registering for {{ class_name }}</p>
+    </div>
+{% endblock %}

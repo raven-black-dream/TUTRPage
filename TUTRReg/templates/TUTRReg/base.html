@@ -1,0 +1,89 @@
+{% load tutr_extras %}
+<html>
+{% load static %}
+<head>
+    <title>{% block title %} The University of Tir Righ {% endblock %} </title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'TUTRReg/styles.css' %}"/>
+</head>
+<header>
+    <div id="banner">
+        <img src="{% static "TUTRReg/northernregion.gif" %}" class="tutr_badge" />
+        <img src="{% static "TUTRReg/tutrlogo.png" %}" class="tutr_logo" />
+        <br class="cb" />
+    </div>
+</header>
+
+<body>
+    {% block nav %}
+    <div id="nav"><!-- menu -->
+	        <table style="width:100%; text-align: center">
+	            <tr>
+                    <td><a href="/">Home</a></td>
+                    <td><a href="/faculty/">Contacts</a></td>
+                    <td><a href="/degrees/">Degrees</a></td>
+                    <td><a href="/faq/">FAQ</a></td>
+                    <td><a href="/documents/">Documents</a></td>
+                    <td><a href="/links/">Links</a></td>
+                    <td><a href="/sessions/">Sessions</a></td>
+                    {% if user.is_authenticated %}
+                        {% if user|has_group:'student' %}
+                            <td><a href="/landing/">Student Page</a></td>
+                        {% elif user|has_group:'teacher' %}
+                            <td><a href="/landing/">Teacher Page</a></td>
+                        {% elif user|has_group:'dean' %}
+                            <td><a href="/landing/">Dean Page</a></td>
+                        {% elif user|has_group:'registrar' %}
+                            <td><a href="/landing/">Registrar Page</a></td>
+                        {% elif user|has_group:'head_registrar' %}
+                            <td><a href="/landing/">Reg. Head Page</a></td>
+                        {% elif user|has_group:'governor' %}
+                            <td><a href="/landing/">Governor Page</a></td>
+                        {% elif user|has_group:'event_steward' %}
+                            <td><a href="/landing/">Event Steward Page</a></td>
+                        {% else %}
+                            <td><a href="/landing/">Unknown Page</a></td>
+                        {% endif %}
+
+                    {% else %}
+                        <td><a href="/accounts/login/">Login</a></td>
+                    {% endif %}
+		        </tr>
+	        </table>
+    </div>
+    {% endblock %}
+    <div class="container-fluid">
+    <div class="row">
+    <div class="col-sm-2">
+        {% block sidebar %}
+        {% if user.is_authenticated %}
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'TUTRReg:index' %}">Home</a></li>
+            <li><a href="">Transcript</a></li>
+            {% if user|has_group:'teacher' %}
+                <li><a href=""></a>Classes</li>
+            {% elif user|has_group:'dean' %}
+                <li><a href="">Classes Proposed</a> </li>
+            {% elif user|has_group:'registrar' %}
+                <li><a href=""></a> </li>
+            {% endif %}
+            <li><a href="">All authors</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+        {% endif %}
+        {% endblock %}
+    </div>
+    <div class="col-sm-10">
+        <div id="main">
+        <div>
+        {% block content %}{% endblock %}
+        </div>
+        <div class="tutr-footer">
+            This is the unofficial web site for the University of <a href="http://tirrigh.org/">Tir Righ</a>, of the <a href="http://sca.org">Society for Creative Anachronism, Inc.</a> and is maintained by the Governor. It is not a corporate publication of the Society for Creative Anachronism, Inc. and does not delineate SCA policies.
+        </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+</html>

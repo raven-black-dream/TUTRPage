@@ -1,0 +1,47 @@
+
+{% extends 'TUTRReg/base.html' %}
+
+{% block content %}
+        <div class="section">
+        {% block about %}
+		<h2>About the University</h2>
+            <p>
+                The University of Tir Righ (TUTR) was formally created in November of 2007 during the reign of Thegn Ulf Bloodfoot Fallgrson and Viscountess Caoimhinn ingen Domnaille.  TUTR is an institution of learning created to serve the growing needs of all individuals, independent of location, within the Principality of Tir Righ. Through TUTR you can take classes in what interests you, earn a variety of different degrees and, if you're devoted to a single area of study, you can further specialize in our upper graduate programs. TUTR was conceived to give everyone in Tir Righ a safe place to learn and be included.
+            </p>
+        {% endblock %}
+        </div>
+         <div class="section">
+         {% block find %}
+            <h2>Find us on Facebook</h2>
+            <p>
+                If you are a member of the SCA, please look us up on Facebook in a closed group called <strong>TUTR - University of Tir Righ</strong>.  This group is dedicating to discussing education in Tir Righ.
+            </p>
+         {% endblock %}
+        </div>
+		<div class="section">
+        {% block degree %}
+            <h2>Earn a Degree or a Diploma</h2>
+            <p>
+                You can earn a degree by taking classes and completing sixty (60) credit hours. You can earn the Newcomers' Diploma by taking a group of ten "core" classes to get you started in the SCA. Transfer credits from classes taken with the University of Ithra, or at specially designated events such as Estrella War and Pennsic War are encouraged; speak to a Dean or the Governor about how you can transfer your credit. Please note that credits will only be given in subjects that pre-date 1650 or on SCA-related topics. More information can be found on the <a href="{% url 'TUTRReg:degrees' %}">Degrees</a> page.
+            </p>
+        {% endblock %}
+        </div>
+        <div class="section_last">
+        {% block teachers %}
+            <h2>Event Stewards, Teachers and Students of Tir Righ</h2>
+            <p>
+                New students and teachers are always welcome!
+            </p>
+            <p>
+                To learn more about what's happening in your area, or for more information on:
+            </p>
+            <ul>
+                <li> holding a TUTR weekend session, or</li
+                ><li> teaching or holding TUTR classes at an upcoming event</li>
+            </ul>
+            <p>
+                please <a href="{% url 'TUTRReg:faculty' %}"><strong>contact your local branch officer or the Governor</strong></a>  who can direct you.
+            </p>
+        {% endblock %}
+        </div>
+{% endblock %}
