@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import  AbstractUser
+from django.contrib.auth.models import AbstractUser
 import django.core.validators as val
 from simple_history.models import HistoricalRecords
 
@@ -22,9 +22,9 @@ class Branch(models.Model):
 
 
 class Person(models.Model):
-    sca_name = models.CharField(max_length=100)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    sca_name = models.CharField(null=True, max_length=100)
+    first_name = models.CharField(null=True, max_length=100)
+    last_name = models.CharField(null=True, max_length=100)
     branch_id = models.ForeignKey(Branch, on_delete=models.PROTECT)
     joined_date = models.DateField('Date Joined', blank=True, null=True)
     active = models.BooleanField()
@@ -88,10 +88,10 @@ class Class(models.Model):
     max_participants = models.IntegerField()
     travel = models.BooleanField()
     handouts = models.BooleanField()
-    student_reqs = models.TextField()
-    loc_reqs = models.TextField()
-    description = models.TextField()
-    pre_reqs = models.TextField()
+    student_reqs = models.TextField(null=True)
+    loc_reqs = models.TextField(null=True)
+    description = models.TextField(null=True)
+    pre_reqs = models.TextField(null=True)
     teacher = models.ForeignKey(Person, on_delete=models.PROTECT)
     approved = models.BooleanField()
     history = HistoricalRecords()
@@ -125,6 +125,8 @@ class Event(models.Model):
 class Session(models.Model):
     class_id = models.ForeignKey(Class, on_delete=models.PROTECT)
     event_id = models.ForeignKey(Event, on_delete=models.PROTECT)
+    start_time = models.TimeField(null=True)
+    end_time = models.TimeField(null=True)
 
     def __str__(self):
         return str(self.pk)

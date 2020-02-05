@@ -1,0 +1,85 @@
+html, body { margin: 5px; padding: 5px; }
+body { background: #fff; font-family:Arial, Helvetica, sans-serif;}
+h1, h2, h3 { margin-top: 0px; margin-bottom: 0px; color: #00b; }
+h1 { text-align:center; padding-top: 30px;}
+table { width: auto; padding: 0; border: none; background-color: white; }
+td, th { padding: 2px 5px; border:none; }
+th { border-bottom: 2px solid #00b;}
+table tr.even { background-color: #EEEEFF;}
+
+#banner { text-align: center; padding: 0px 0px 0px 0px; }
+.tutr_badge { width: 96px; height: 96px;  vertical-align: middle; padding-right: 10px; }
+.tutr_logo {width: auto; height: 96px; vertical-align: middle; padding-right: 10px;}
+
+#main { padding: 10px 10px 10px 10px;}
+#main dt a { font-weight: bold; color: #00b; text-decoration: none; }
+#main dt a:hover { color: blue; }
+#main dd { margin-bottom: 10px; }
+#main ol { list-style-type:decimal; }
+#main .section { border-bottom: 2px groove #00b; padding: 15px 0 10px 0;}
+#main .section:first-child { padding-top: 0px; }
+#main .section_last {border-bottom: none; padding: 15px 0px 10px 1px;}
+#main .tutr-footer { padding: 15px 0; border-top: 2px groove #00b;}
+/* Table styling for the contacts page */
+#main table.contacts { width: 100%; }
+
+
+#nav { text-align: center; margin: 10px 10px 10px 10px; padding: 0px; background-color:#D3D3D3; font-family:Arial, Helvetica, sans-serif; font-weight: bold}
+#nav ul { margin: 0; padding: 0; }
+#nav ul li { list-style: none; text-align: left; margin: 0px; padding: 10px; color:white; font-weight: bold;}
+#nav a { text-decoration: none; color: black; display: block; font-weight:bold; padding: 1px 5px; }
+#nav a:hover, #nav ul li a:active { color: white; }
+#nav a:hover { background-color: Blue;}
+#nav ul li.selected { padding: 1px 5px; }
+#nav table { width: 100%; background-color: #D3D3D3}
+
+
+#details_table {
+    align-items: center;
+    border-collapse: collapse;
+    padding-bottom: 20px;
+}
+#details_table h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+#details_table table {
+    margin: auto;
+    border: 1px groove #00B;
+    border-collapse: collapse;
+}
+#details_table th {
+    background-color: #EEEEFF;
+    text-align: center;
+    border-left: 1px groove white;
+    border-right: 1px groove white;
+    border-bottom: 1px groove #00B;
+}
+#details_table td {
+    border: 1px groove white;
+    border-collapse: collapse
+}
+
+#details_page {
+    text-align: center;
+}
+#details_page h2, h3 {
+    text-decoration: underline;
+}
+#details_page h3 {
+    padding-bottom: 10px;
+}
+#details_page p {
+    padding-top: auto;
+}
+.registration_button {
+    padding-top: 15px;
+}
+
+.fl { float: left; }
+.fr { float: right; }
+.cb { clear: both; }
+
+.event_list {
+    padding-top: 10px;
+}
