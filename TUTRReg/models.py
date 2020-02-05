@@ -106,12 +106,12 @@ class Event(models.Model):
     end_date = models.DateField('End Date')
     tutr_surcharge = models.DecimalField(max_digits=5, decimal_places=2)
     branch_id = models.ForeignKey(Branch, on_delete=models.PROTECT)
-    dean = models.ForeignKey(Person, on_delete=models.PROTECT)
-    location_name = models.CharField(max_length=100)
-    apt_num = models.CharField(max_length=10)
-    street = models.CharField(max_length=200)
-    city = models.CharField(max_length=100)
-    postal_cd = models.CharField(max_length=7, validators=[val.RegexValidator(
+    dean = models.ForeignKey(Person, null=True, on_delete=models.PROTECT)
+    location_name = models.CharField(null=True, max_length=100)
+    apt_num = models.CharField(null=True, max_length=10)
+    street = models.CharField(null=True, max_length=200)
+    city = models.CharField(null=True, max_length=100)
+    postal_cd = models.CharField(null=True, max_length=7, validators=[val.RegexValidator(
         regex=r'^\d{5}-\d{4}|\d{5}|[A-Z]\d[A-Z] \d[A-Z]\d$',
         message='You have entered an invalid Postal Code. Please enter a valid Canadian or US Postal Code')])
     closed = models.BooleanField()
