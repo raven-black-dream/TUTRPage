@@ -11,7 +11,7 @@
                         <th>TUTR Surcharge</th>
                         <th>Start Date</th>
                         <th>End Date</th>
-                        <th>TUTR Coordinator</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -20,7 +20,6 @@
                     <td>{{ EventDetailList.tutr_surcharge }}</td>
                     <td>{{ EventDetailList.start_date }}</td>
                     <td>{{ EventDetailList.end_date }}</td>
-                    <td>{{ EventDetailList.dean }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -47,12 +46,14 @@
                         <td>{{ class.class_id.student_reqs }}</td>
                         <td>{{ class.class_id.pre_reqs }}</td>
                         <td>{{ class.class_id.cost }}</td>
+                        {% if open %}
                         <td class="registration_button">
                             <form action= {% url 'TUTRReg:register' class.pk class.class_id.pk%} method="post">
                                 {% csrf_token %}
                                 <input type="submit" value="Register">
                             </form>
                         </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

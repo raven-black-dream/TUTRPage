@@ -34,7 +34,10 @@ class Person(models.Model):
     guardian = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
 
     def __str__(self):
-        return self.sca_name
+        if self.sca_name is not None:
+            return self.sca_name
+        else:
+            return f'{self.first_name} {self.last_name}'
 
 
 class User(AbstractUser):

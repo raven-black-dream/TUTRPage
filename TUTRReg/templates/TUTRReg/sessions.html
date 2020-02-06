@@ -1,10 +1,39 @@
 {% extends 'TUTRReg/base.html' %}
 {% block content %}
     {% if EventList %}
-        <div id="details_table">
+        <div id="past_event_table">
+        <h2 align="center">Recent Events</h2>
+        <div class="event_list">
+        <table align="center" id="past_events">
+        <thead>
+        <tr class="even">
+            <th>Event Name</th>
+            <th>Branch</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Registration Status</th>
+        </tr>
+        </thead>
+        {% for event in past_events %}
+            <tr>
+            <td><a href="{% url 'TUTRReg:event_detail' event.pk %}">{{ event.event_name }}</a></td>
+            <td>{{ event.branch_id }}</td>
+            <td>{{ event.start_date }}</td>
+            <td>{{ event.end_date }}</td>
+
+            <td>
+                Registration is Closed
+            </td>
+            </tr>
+        {% endfor %}
+        </table>
+        </div>
+        <div id="future_event_table">
+
         <h2 align="center">Upcoming Events</h2>
         <div class="event_list">
-        <table align="center">
+        {% if future_events %}
+        <table align="center" id="future_events">
         <thead>
         <tr class="even">
             <th>Event Name</th>
@@ -15,7 +44,7 @@
             <th>TUTR Coordinator</th>
         </tr>
         </thead>
-        {% for event in EventList %}
+        {% for event in future_events %}
             <tr>
             <td><a href="{% url 'TUTRReg:event_detail' event.pk %}">{{ event.event_name }}</a></td>
             <td>{{ event.branch_id }}</td>
@@ -32,9 +61,13 @@
             </tr>
         {% endfor %}
         </table>
+        {% else %}
+        <p align="center">There are no events coming up</p>
+        {% endif %}
+        </div>
         </div>
     {% else %}
-        <p>There are no events coming up</p>
-        </div>
+            <p> Huh, that is strange </p>
+
     {% endif %}
 {% endblock %}

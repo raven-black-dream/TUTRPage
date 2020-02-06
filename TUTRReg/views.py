@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 
 from .models import Event, Session, Class, Course, Attendance
+from datetime import datetime
 # Create your views here.
 
 
@@ -25,8 +26,12 @@ class SessionView(generic.ListView):
     template_name = 'TUTRReg/sessions.html'
     context_object_name = 'EventList'
 
-    def get_queryset(self):
-        return Event.objects.filter(start_date__gte=timezone.now())
+    def get_context_data(self, *, object_list=None, **kwargs):
+        one_year_ago = timezone.now() - timezone.timedelta(days=365)
+        context = super(SessionView, self).get_context_data(**kwargs)
+        context['past_events'] = Event.objects.filter(start_date__gte=one_year_ago, start_date__lte=timezone.now())
+        context['future_events'] = Event.objects.filter(start_date__gte=timezone.now())
+        return context
 
 
 class EventDetail(generic.DetailView):
@@ -37,6 +42,9 @@ class EventDetail(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
         context['class_list'] = Session.objects.filter(event_id=self.kwargs['pk']).select_related("class_id")
+        event_end_date = Session.objects.filter(event_id=self.kwargs['pk']).values('event_id__end_date').first()
+        end_date = event_end_date['event_id__end_date']
+        context['open'] = end_date >= timezone.now().date()
         return context
 
 
