@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponseRedirect
 from django.views import generic, View
 from django.utils import timezone
@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 
 from .models import Event, Session, Class, Course, Attendance
+from .forms import EventForm, ClassForm, PersonForm
 from datetime import datetime
 # Create your views here.
 
@@ -19,6 +20,36 @@ def register(request, *args, **kwargs):
         registration.save()
 
     return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args=(event,))
+
+
+def new_event(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.approved = 1
+            event.closed = 0
+            event.save()
+            return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args(event.pk))
+
+    else:
+        form = EventForm()
+    return render(request, 'TUTRReg/edit_event.html', {'form': form})
+
+
+def edit_event(request, pk, *args, **kwargs):
+    event = get_object_or_404(Event, pk=pk)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.closed = 0
+            event.approved = 1
+            event.save()
+            return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args(event.pk))
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'TUTRReg/edit_event.html', {'form': form})
 
 
 class SessionView(generic.ListView):

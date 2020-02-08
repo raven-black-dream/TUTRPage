@@ -85,7 +85,7 @@ LOGIN_REDIRECT_URL = '/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tutrpage',
+        'NAME': 'tutrpage_test',
         'USER': 'eharley',
         'PASSWORD': 'R@itze1104',
         'HOST': '127.0.0.1',

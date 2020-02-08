@@ -34,6 +34,7 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(template_name='TUTRReg/login.html')),
     path('landing/', views.LandingView.as_view(), name='landing'),
     path('sessions/<int:session_id>/<int:class_id>/register/', views.register, name='register'),
+    path('sessions/new', views.new_event, name='new_event')
 ]
 
 

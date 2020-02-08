@@ -46,7 +46,7 @@
                         <td>{{ class.class_id.student_reqs }}</td>
                         <td>{{ class.class_id.pre_reqs }}</td>
                         <td>{{ class.class_id.cost }}</td>
-                        {% if open %}
+                        {% if open and user.is_authenticated %}
                         <td class="registration_button">
                             <form action= {% url 'TUTRReg:register' class.pk class.class_id.pk%} method="post">
                                 {% csrf_token %}
