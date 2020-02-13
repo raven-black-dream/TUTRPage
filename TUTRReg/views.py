@@ -44,12 +44,70 @@ def edit_event(request, pk, *args, **kwargs):
         if form.is_valid():
             event = form.save(commit=False)
             event.closed = 0
-            event.approved = 1
+            event.approved = 0
             event.save()
             return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args(event.pk))
     else:
         form = EventForm(instance=event)
     return render(request, 'TUTRReg/edit_event.html', {'form': form})
+
+
+def new_class(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = ClassForm(request.POST)
+        if form.is_valid():
+            cls = form.save(commit=False)
+            cls.approved = 0
+
+            cls.save()
+            return HttpResponseRedirect(reverse('TUTRReg:class_detail'), args(cls.pk))
+
+    else:
+        form = ClassForm()
+    return render(request, 'TUTRReg/edit_class.html', {'form': form})
+
+
+def edit_class(request, pk, *args, **kwargs):
+    cls = get_object_or_404(Event, pk=pk)
+    if request.method == 'POST':
+        form = ClassForm(request.POST, instance=cls)
+        if form.is_valid():
+            cls = form.save(commit=False)
+            cls.approved = 0
+            cls.save()
+            return HttpResponseRedirect(reverse('TUTRReg:class_detail'), args(event.pk))
+    else:
+        form = EventForm(instance=cls)
+    return render(request, 'TUTRReg/edit_event.html', {'form': form})
+
+
+def new_person(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            person = form.save(commit=False)
+            person.approved = 0
+
+            cls.save()
+            return HttpResponseRedirect(reverse('TUTRReg:person_detail'), args(cls.pk))
+
+    else:
+        form = ClassForm()
+    return render(request, 'TUTRReg/edit_person.html', {'form': form})
+
+
+def edit_person(request, pk, *args, **kwargs):
+    cls = get_object_or_404(Person, pk=pk)
+    if request.method == 'POST':
+        form = PersonForm(request.POST, instance=cls)
+        if form.is_valid():
+            person = form.save(commit=False)
+            person.approved = 0
+            person.save()
+            return HttpResponseRedirect(reverse('TUTRReg:person_detail'), args(event.pk))
+    else:
+        form = EventForm(instance=cls)
+    return render(request, 'TUTRReg/edit_person.html', {'form': form})
 
 
 class SessionView(generic.ListView):

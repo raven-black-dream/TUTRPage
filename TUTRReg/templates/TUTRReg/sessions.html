@@ -1,4 +1,5 @@
 {% extends 'TUTRReg/base.html' %}
+{% load tutr_extras %}
 {% block content %}
     {% if EventList %}
         <div id="past_event_table">
@@ -27,6 +28,7 @@
             </tr>
         {% endfor %}
         </table>
+        </div>
         </div>
         <div id="future_event_table">
 
@@ -62,7 +64,17 @@
         {% endfor %}
         </table>
         {% else %}
-        <p align="center">There are no events coming up</p>
+            {% if user.is_authenticated %}
+            {% if  user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+                <form>
+                <button formaction="{% url 'TUTRReg:new_event' %}">Add Event</button>
+                </form>
+            {% endif %}
+            {% else %}
+                <p align="center">There are no events coming up</p>
+        {% endif %}
+
+
         {% endif %}
         </div>
         </div>

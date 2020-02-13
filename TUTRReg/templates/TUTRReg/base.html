@@ -19,11 +19,8 @@
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark" style="background-color: #D3D3D3" id="nav"><!-- menu -->
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="mainMenu">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto" id="navItems">
                         <li class="nav-item active">
                             <a href="/">Home</a>
                         </li>
@@ -45,24 +42,17 @@
                         <li class="nav-item">
                             <a href="/sessions/">Sessions</a>
                         </li>
-                    </ul>
-
-                    {% if user.is_authenticated %}
-                        <ul class="navbar-nav ml-auto">
-                            {% if user|has_group:'student' %}
+                        {% if user.is_authenticated %}
+                            {% if user|has_group:'Student' %}
                                 <li><a href="/landing/">Student Page</a></li>
-                            {% elif user|has_group:'teacher' %}
-                                <li><a href="/landing/">Teacher Page</a></li>
-                            {% elif user|has_group:'dean' %}
+                            {% elif user|has_group:'Dean' %}
                                 <li><a href="/landing/">Dean Page</a></li>
-                            {% elif user|has_group:'registrar' %}
+                            {% elif user|has_group:'Registrar' %}
                                 <li><a href="/landing/">Registrar Page</a></li>
-                            {% elif user|has_group:'head_registrar' %}
+                            {% elif user|has_group:'Head Registrar' %}
                                 <li><a href="/landing/">Reg. Head Page</a></li>
-                            {% elif user|has_group:'governor' %}
+                            {% elif user|has_group:'Governor' %}
                                 <li><a href="/landing/">Governor Page</a></li>
-                            {% elif user|has_group:'event_steward' %}
-                                <li><a href="/landing/">Event Steward Page</a></li>
                             {% else %}
                                 <li><a href="/landing/">Unknown Page</a></li>
                             {% endif %}
@@ -76,13 +66,11 @@
                                 <a class="dropdown-item" href={% url 'logout' %}>Log out</a>
                             </div>
                             </li>
-                        </ul>
-                        {% else %}
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
+                            {% else %}
+                            <li class="nav-item">
                                     <a href="/accounts/login/">Login</a>
-                                 </li>
-                            </ul>
+                             </li>
+                    </ul>
                     </div>
                 </ul>
 
@@ -94,17 +82,19 @@
     {% endblock %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-10">
-                <div id="main">
-                    <div>
-                        {% block content %}
-                        {% endblock %}
-                    </div>
-                    <div class="tutr-footer">
-                        This is the unofficial web site for the University of <a href="http://tirrigh.org/">Tir Righ</a>, of the <a href="http://sca.org">Society for Creative Anachronism, Inc.</a> and is maintained by the Governor. It is not a corporate publication of the Society for Creative Anachronism, Inc. and does not delineate SCA policies.
-                    </div>
+
+            <div id="main">
+                <div>
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                <div class="tutr-footer">
+                    <p>
+                    This is the unofficial web site for the University of <a href="http://tirrigh.org/">Tir Righ</a>, of the <a href="http://sca.org">Society for Creative Anachronism, Inc.</a> and is maintained by the Governor. It is not a corporate publication of the Society for Creative Anachronism, Inc. and does not delineate SCA policies.
+                    </p>
                 </div>
             </div>
+
         </div>
     </div>
     <script src="{% static 'TUTRReg/js/jquery-3.4.1.min.js' %}"></script>
