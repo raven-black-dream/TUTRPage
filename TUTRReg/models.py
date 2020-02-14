@@ -21,30 +21,6 @@ class Branch(models.Model):
         return self.branch_name
 
 
-class Person(models.Model):
-    sca_name = models.CharField(null=True, max_length=100)
-    first_name = models.CharField(null=True, max_length=100)
-    last_name = models.CharField(null=True, max_length=100)
-    branch_id = models.ForeignKey(Branch, on_delete=models.PROTECT)
-    joined_date = models.DateField('Date Joined', blank=True, null=True)
-    active = models.BooleanField()
-    position = models.CharField(max_length=100, blank=True)
-    teacher = models.BooleanField()
-    minor = models.BooleanField(blank=True)
-    guardian = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
-
-    def __str__(self):
-        if self.sca_name is not None:
-            return self.sca_name
-        else:
-            return f'{self.first_name} {self.last_name}'
-
-
-class User(AbstractUser):
-    person_id = models.ForeignKey(Person, on_delete=models.PROTECT, null=True, blank=True)
-    pass
-
-
 class DegreeType(models.Model):
     type_name = models.CharField(max_length=100)
     core_credits = models.IntegerField()
@@ -81,6 +57,31 @@ class Course(models.Model):
 
     def __str__(self):
         return self.course_name
+
+
+class Person(models.Model):
+    sca_name = models.CharField(null=True, max_length=100)
+    first_name = models.CharField(null=True, max_length=100)
+    last_name = models.CharField(null=True, max_length=100)
+    branch_id = models.ForeignKey(Branch, on_delete=models.PROTECT)
+    joined_date = models.DateField('Date Joined', blank=True, null=True)
+    active = models.BooleanField()
+    position = models.CharField(max_length=100, blank=True)
+    teacher = models.BooleanField()
+    minor = models.BooleanField(blank=True)
+    guardian = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
+    degrees = models.ManyToManyField(Degree)
+
+    def __str__(self):
+        if self.sca_name is not None:
+            return self.sca_name
+        else:
+            return f'{self.first_name} {self.last_name}'
+
+
+class User(AbstractUser):
+    person_id = models.ForeignKey(Person, on_delete=models.PROTECT, null=True, blank=True)
+    pass
 
 
 class Class(models.Model):

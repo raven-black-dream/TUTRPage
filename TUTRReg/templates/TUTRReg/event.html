@@ -1,5 +1,5 @@
 {% extends 'TUTRReg/base.html' %}
-
+{% load tutr_extras %}
 {% block content %}
     {% if EventDetailList %}
         <div id="details_table">
@@ -50,7 +50,7 @@
                         <td class="registration_button">
                             <form action= {% url 'TUTRReg:register' class.pk class.class_id.pk%} method="post">
                                 {% csrf_token %}
-                                <input type="submit" value="Register">
+                                <button type="submit" class="save btn btn-default">Register</button>
                             </form>
                         </td>
                         {% endif %}
@@ -58,6 +58,11 @@
                 {% endfor %}
                 </tbody>
             </table>
+            {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+                <form action="{% url 'TUTRReg:edit_event' pk=event.pk %}" method="get">
+                    <button type="submit" class="save btn btn-default">Edit Event</button>
+                </form>
+            {% endif %}
         </div>
     {% endif %}
 {% endblock %}

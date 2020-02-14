@@ -4,8 +4,9 @@ from django.views import generic, View
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+from django.db.models import Q
 
-from .models import Event, Session, Class, Course, Attendance
+from .models import Event, Session, Class, Course, Attendance, Person
 from .forms import EventForm, ClassForm, PersonForm
 from datetime import datetime
 # Create your views here.
@@ -22,92 +23,37 @@ def register(request, *args, **kwargs):
     return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args=(event,))
 
 
-def new_event(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            event = form.save(commit=False)
-            event.approved = 1
-            event.closed = 0
-            event.save()
-            return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args(event.pk))
-
-    else:
-        form = EventForm()
-    return render(request, 'TUTRReg/edit_event.html', {'form': form})
+class CreateEventView(generic.CreateView):
+    template_name = 'TUTRReg/edit_event.html'
+    form_class = EventForm
 
 
-def edit_event(request, pk, *args, **kwargs):
-    event = get_object_or_404(Event, pk=pk)
-    if request.method == 'POST':
-        form = EventForm(request.POST, instance=event)
-        if form.is_valid():
-            event = form.save(commit=False)
-            event.closed = 0
-            event.approved = 0
-            event.save()
-            return HttpResponseRedirect(reverse('TUTRReg:event_detail'), args(event.pk))
-    else:
-        form = EventForm(instance=event)
-    return render(request, 'TUTRReg/edit_event.html', {'form': form})
+class UpdateEventView(generic.UpdateView):
+    model = Event
+    template_name = 'TUTRReg/edit_event.html'
+    form_class = EventForm
 
 
-def new_class(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = ClassForm(request.POST)
-        if form.is_valid():
-            cls = form.save(commit=False)
-            cls.approved = 0
-
-            cls.save()
-            return HttpResponseRedirect(reverse('TUTRReg:class_detail'), args(cls.pk))
-
-    else:
-        form = ClassForm()
-    return render(request, 'TUTRReg/edit_class.html', {'form': form})
+class CreateClassView(generic.CreateView):
+    template_name = 'TUTRReg/edit_class.html'
+    form_class = ClassForm
 
 
-def edit_class(request, pk, *args, **kwargs):
-    cls = get_object_or_404(Event, pk=pk)
-    if request.method == 'POST':
-        form = ClassForm(request.POST, instance=cls)
-        if form.is_valid():
-            cls = form.save(commit=False)
-            cls.approved = 0
-            cls.save()
-            return HttpResponseRedirect(reverse('TUTRReg:class_detail'), args(event.pk))
-    else:
-        form = EventForm(instance=cls)
-    return render(request, 'TUTRReg/edit_event.html', {'form': form})
+class UpdateClassView(generic.UpdateView):
+    model = Class
+    template_name = 'TUTRReg/edit_class.html'
+    form_class = ClassForm
 
 
-def new_person(request, *args, **kwargs):
-    if request.method == 'POST':
-        form = PersonForm(request.POST)
-        if form.is_valid():
-            person = form.save(commit=False)
-            person.approved = 0
-
-            cls.save()
-            return HttpResponseRedirect(reverse('TUTRReg:person_detail'), args(cls.pk))
-
-    else:
-        form = ClassForm()
-    return render(request, 'TUTRReg/edit_person.html', {'form': form})
+class CreatePersonView(generic.CreateView):
+    template_name = 'TUTRReg/edit_person.html'
+    form_class = PersonForm
 
 
-def edit_person(request, pk, *args, **kwargs):
-    cls = get_object_or_404(Person, pk=pk)
-    if request.method == 'POST':
-        form = PersonForm(request.POST, instance=cls)
-        if form.is_valid():
-            person = form.save(commit=False)
-            person.approved = 0
-            person.save()
-            return HttpResponseRedirect(reverse('TUTRReg:person_detail'), args(event.pk))
-    else:
-        form = EventForm(instance=cls)
-    return render(request, 'TUTRReg/edit_person.html', {'form': form})
+class UpdatePersonView(generic.UpdateView):
+    model = Person
+    template_name = 'TUTRReg/edit_person.html'
+    form_class = PersonForm
 
 
 class SessionView(generic.ListView):
@@ -168,22 +114,31 @@ class LandingView(LoginRequiredMixin, View):
     login_url = '/accounts/login/'
     redirect_field_name = ''
 
-    def get(self, request, *args, **kwargs):
-        context_parts = {'Student':[],
-                         'Dean':[],
-                         'Registrar':[],
-                         'Head Registrar':[],
-                         'Governor':[]}
+    def get_context_data(self, request, *args, **kwargs):
+        context_parts = {'Student': [],
+                         'Dean': [],
+                         'Registrar': [],
+                         'Head Registrar': [],
+                         'Governor': []}
+
         context = {}
         return render(request, 'TUTRReg/landing.html', context=context)
 
 
 class AddClassView(generic.ListView):
     template_name = 'TUTRReg/add_class.html'
+    model = Session
 
-    def get_context_data(self, **kwargs):
-        context = super(AddClassView, self).get_context_data(**kwargs)
-        context[''] = []
-        return super().get_context_data(**kwargs)
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query is None:
+            object_list = Class.objects.all()
+        else:
+            object_list = Class.objects.filter(Q(class_name__icontains=query))
+        return object_list
+
+
+class AttendanceView(generic.ListView):
+    model = Attendance
 
 
