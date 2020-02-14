@@ -169,6 +169,21 @@ class LandingView(LoginRequiredMixin, View):
     redirect_field_name = ''
 
     def get(self, request, *args, **kwargs):
+        context_parts = {'Student':[],
+                         'Dean':[],
+                         'Registrar':[],
+                         'Head Registrar':[],
+                         'Governor':[]}
         context = {}
         return render(request, 'TUTRReg/landing.html', context=context)
+
+
+class AddClassView(generic.ListView):
+    template_name = 'TUTRReg/add_class.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AddClassView, self).get_context_data(**kwargs)
+        context[''] = []
+        return super().get_context_data(**kwargs)
+
 
