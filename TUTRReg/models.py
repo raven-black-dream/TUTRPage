@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import django.core.validators as val
 from simple_history.models import HistoricalRecords
+from django.urls import reverse
 
 # Create your models here.
 
@@ -70,7 +71,7 @@ class Person(models.Model):
     teacher = models.BooleanField()
     minor = models.BooleanField(blank=True)
     guardian = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
-    degrees = models.ManyToManyField(Degree)
+    degrees = models.ManyToManyField(Degree, null=True)
 
     def __str__(self):
         if self.sca_name is not None:
@@ -124,6 +125,9 @@ class Event(models.Model):
 
     def __str__(self):
         return self.event_name
+
+    def get_absolute_url(self):
+        return reverse('TUTRReg:edit_event', args=[self.id])
 
 
 class Session(models.Model):

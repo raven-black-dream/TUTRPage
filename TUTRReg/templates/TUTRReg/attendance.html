@@ -1,0 +1,37 @@
+{% extends 'TUTRReg/base.html' %}
+{% block content %}
+    <div class="section">
+    <table>
+        <thead class="attendance_list">
+            <tr>
+                <th>SCA Name</th>
+                <th>Attended</th>
+                <th>Passed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if ClassList %}
+            {% for person in ClassList %}
+                <tr>
+                    <td>{{ person.person_id.sca_name }}</td>
+                    <td>{{ person.attended }}</td>
+                    <td>{{ person.passed }}</td>
+                    <td>
+                        <form action="{% url 'TUTRReg:remove_person' session_id=session_id person_id=person.person_id.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="save btn btn-default">Remove Person</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    </div>
+    <div class="section">
+        <form action="{% url 'TUTRReg:add_person' session_id=session_id %}" method="get">
+            <button type="submit" class="save btn btn-default">Add Person</button>
+        </form>
+
+    </div>
+{% endblock%}

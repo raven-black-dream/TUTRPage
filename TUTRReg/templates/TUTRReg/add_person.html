@@ -1,11 +1,11 @@
-﻿{% extends 'TUTRReg/base.html' %}
+{% extends 'TUTRReg/base.html' %}
 {% block content %}
-    <h2>Add Classes to {{ event.event_name }} in {{ event.branch_id }}</h2>
+    <h2>Add Attendees to {{ session.class_id.class_name }}</h2>
     <div class="section">
-        <form action="{% url 'TUTRReg:add_classes' event_id=event_id %}" method="get">
+        <form action="{% url 'TUTRReg:add_person' session_id=session_id %}" method="get">
             {% csrf_token %}
-            <label for="class_search">Class Name:</label>
-            <input id="class_search" type="text" name="class_search">
+            <label for="person_search">Name Search:</label>
+            <input id="person_search" type="text" name="person_search">
             <input type="submit", value="Search">
         </form>
     </div>
@@ -14,22 +14,22 @@
     <thead>
     <th>
         <tr>
-            <th>Class Name</th>
-            <th>Description</th>
-            <th>Teacher</th>
+            <th>SCA Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
         </tr>
     </th>
     </thead>
     <tbody>
     {% for object in object_list %}
         <tr>
-        <td>{{ object.class_name }}</td>
-        <td>{{ object.description }}</td>
-        <td>{{ object.teacher }}</td>
+        <td>{{ object.sca_name }}</td>
+        <td>{{ object.first_name }}</td>
+        <td>{{ object.last_name }}</td>
         <td>
-            <form action="{% url 'TUTRReg:add_class_event' event_id=event_id class_id=object.pk %}" method="post">
+            <form action="{% url 'TUTRReg:register_person' session_id=session_id person_id=object.pk %}" method="post">
                 {% csrf_token %}
-                <input type="submit" value="Add Class">
+                <button type="submit" class="save btn btn-default">Add Person</button>
             </form>
         </td>
         </tr>

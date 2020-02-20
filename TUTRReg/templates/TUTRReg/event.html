@@ -38,29 +38,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for class in class_list %}
+                {% if session %}
+                {% for class in session%}
                     <tr>
-                        <td><a href="{% url 'TUTRReg:event_class_detail' class.pk class.class_id.pk%}">{{ class.class_id.class_name }}</a></td>
+                        <td><a href="{% url 'TUTRReg:event_class_detail' session_id=class.pk pk=class.class_id.pk%}">{{ class.class_id.class_name }}</a></td>
                         <td>{{ class.class_id.teacher }}</td>
                         <td>{{ class.class_id.description }}</td>
                         <td>{{ class.class_id.student_reqs }}</td>
                         <td>{{ class.class_id.pre_reqs }}</td>
                         <td>{{ class.class_id.cost }}</td>
                         {% if open and user.is_authenticated %}
-                        <td class="registration_button">
-                            <form action= {% url 'TUTRReg:register' class.pk class.class_id.pk%} method="post">
-                                {% csrf_token %}
-                                <button type="submit" class="save btn btn-default">Register</button>
+                        {% endif %}
+                        {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+                            <td>
+                            <form action="{% url 'TUTRReg:remove_class' event_id=object.pk session_id=class.pk %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="save btn btn-default">Remove Class</button>
                             </form>
-                        </td>
+                            </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
+                {% endif %}
                 </tbody>
             </table>
             {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
-                <form action="{% url 'TUTRReg:edit_event' pk=event.pk %}" method="get">
+                <form action="{% url 'TUTRReg:edit_event' pk=object.pk %}" method="get">
+                    {% csrf_token %}
                     <button type="submit" class="save btn btn-default">Edit Event</button>
+                </form>
+                 <form action="{% url 'TUTRReg:add_classes' event_id=object.pk %}" method='get'>
+                     {% csrf_token %}
+                    <button type="submit" class="save btn btn-default">Add Classes</button>
                 </form>
             {% endif %}
         </div>
