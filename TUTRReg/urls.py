@@ -37,6 +37,7 @@ urlpatterns = [
     path('sessions/new', views.CreateEventView.as_view(), name='new_event'),
     path('sessions/<int:pk>/edit/', views.UpdateEventView.as_view(), name='edit_event'),
     path('classes/new/', views.CreateClassView, name='new_class'),
+    path('person/new', views.CreatePersonView, name='create_person'),
     path('classes/<int:pk>/edit/', views.UpdateClassView.as_view, name='edit_class'),
     path('sessions/<int:event_id>/add/classes/', views.AddClassView.as_view(), name='add_classes'),
     path('sessions/<int:session_id>/add/', views.AddPersonView.as_view(), name='add_person'),
