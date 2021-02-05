@@ -71,7 +71,7 @@ class Person(models.Model):
     teacher = models.BooleanField()
     minor = models.BooleanField(blank=True)
     guardian = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
-    degrees = models.ManyToManyField(Degree, null=True)
+    degrees = models.ManyToManyField(Degree)
 
     def __str__(self):
         if self.sca_name is not None:

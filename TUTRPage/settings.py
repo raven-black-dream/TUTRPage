@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import simple_history
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'psyhv#@-%c61-j&p-3%4a*nry929wkr=&@kdak!1rt^pzs10k9'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'psyhv#@-%c61-j&p-3%4a*nry929wkr=&@kdak!1rt^pzs10k9')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', ]
 
 
 # Application definition
@@ -85,11 +86,11 @@ LOGIN_REDIRECT_URL = '/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tutrpage_test',
-        'USER': 'eharley',
-        'PASSWORD': 'R@itze1104',
+        'NAME': 'tutr_test',
+        'USER': 'root',
+        'PASSWORD': 'Raitze1104',
         'HOST': '127.0.0.1',
-        'PORT': '3306'
+        'PORT': '3307'
     }
 }
 
@@ -133,3 +134,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 INTERNAL_IPS = ['127.0.0.1', ]
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_REFERRER_POLICY='origin-when-cross-origin'

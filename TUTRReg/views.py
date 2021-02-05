@@ -206,10 +206,9 @@ class LandingView(LoginRequiredMixin, View):
     redirect_field_name = ''
 
     def get_context_data(self, request, *args, **kwargs):
-        context_parts = {'Student': [],
-                         'Dean': [],
-                         'Registrar': [],
-                         'Head Registrar': [],
+        context_parts = {'Student': ['student_details'],
+                         'Dean': ['new_classes'],
+                         'Registrar': ['new_events'],
                          'Governor': []}
 
         context = {}
