@@ -3,13 +3,26 @@ from django.http import Http404, HttpResponseRedirect
 from django.views import generic, View
 from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from django.db.models import Q
+from django.db.models import Q, Sum
 
-from .models import Event, Session, Class, Course, Attendance, Person
-from .forms import EventForm, ClassForm, PersonForm, AttendanceFormSet
+from .models import Event, Session, Class, Course, Attendance, Person, User
+from .forms import EventForm, ClassForm, PersonForm, AttendanceFormSet, RegistrationForm
 from datetime import datetime
 # Create your views here.
+
+
+def register_user(response):
+    if response.method == "POST":
+        form = RegistrationForm(response.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect(reverse('/'))
+    else:
+        form = RegistrationForm()
+
+    return render(response, "TUTRReg/register.html", {"form":form})
 
 
 def register(request, *args, **kwargs):
@@ -59,6 +72,28 @@ def attendance(request, *args, **kwargs):
         formset = AttendanceFormSet(session_id=kwargs['session_id'])
         context={'formset': formset, 'session_id': kwargs['session_id'], 'class_id': kwargs['class_id']}
     return render(request, 'TUTRReg/attendance.html', context=context)
+
+
+@login_required()
+def landing(request):
+    context = {'student': '',
+               'dean': None,
+               'governor': None,
+               'registrar': None}
+    user = get_object_or_404(User, pk=request.user.pk)
+    if user.groups.filter(name__in=['Dean']).exists():
+        context['dean'] = Class.objects.filter(approved=False).all()
+    elif user.groups.filter(name__in=['Governor']).exists():
+        data = Attendance.objects.values('person_id', 'session_id__class_id__course_id__major_id'
+                                         ).exclude(attended=False).exclude(passed=False
+                                                                           ).annotate(Sum('session_id__class_id__course_id__credits'))
+        context['governor'] = data
+    elif user.groups.filter(name__in=['Registrar']).exists():
+        context['registrar'] = Event.objects.filter(approved=False)
+    else:
+        context['student'] = Attendance.objects.filter(person_id=user.person_id
+                                                       ).exclude(passed=False).exclude(attended=False).all()
+    return render(request, "TUTRReg/landing.html", context)
 
 
 class CreateEventView(LoginRequiredMixin, generic.CreateView):
@@ -199,20 +234,6 @@ class CourseDetail(generic.DetailView):
         context = super(CourseDetail, self).get_context_data(**kwargs)
         context['class_list'] = Class.objects.filter(course_id=self.kwargs['pk'])
         return context
-
-
-class LandingView(LoginRequiredMixin, View):
-    login_url = '/accounts/login/'
-    redirect_field_name = ''
-
-    def get_context_data(self, request, *args, **kwargs):
-        context_parts = {'Student': ['student_details'],
-                         'Dean': ['new_classes'],
-                         'Registrar': ['new_events'],
-                         'Governor': []}
-
-        context = {}
-        return render(request, 'TUTRReg/landing.html', context=context)
 
 
 class AddClassView(LoginRequiredMixin, generic.ListView):

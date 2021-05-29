@@ -137,7 +137,7 @@ class Session(models.Model):
     end_time = models.TimeField(null=True)
 
     def __str__(self):
-        return str(self.pk)
+        return f'{str(self.event_id.event_name)}: {str(self.class_id.class_name)}'
 
 
 class Attendance(models.Model):
@@ -145,6 +145,7 @@ class Attendance(models.Model):
     person_id = models.ForeignKey(Person, on_delete=models.PROTECT)
     attended = models.BooleanField(null=True, blank=True)
     passed = models.BooleanField(null=True, blank=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return '{0}: {1}'.format(self.session_id.class_id.class_name, self.person_id.sca_name)

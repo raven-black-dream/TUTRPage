@@ -1,9 +1,10 @@
 {% extends 'TUTRReg/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h2>New Person</h2>
     <form method="post" class="post-form">{% csrf_token %}
-    {{ form.as_table }}
+    {{ form|crispy }}
     <button type="submit" class="save btn btn-default">Save</button>
     </form>
 {% endblock %}

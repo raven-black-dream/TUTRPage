@@ -43,18 +43,14 @@
                             <a href="/sessions/">Sessions</a>
                         </li>
                         {% if user.is_authenticated %}
-                            {% if user|has_group:'Student' %}
-                                <li><a href="/landing/">Student Page</a></li>
-                            {% elif user|has_group:'Dean' %}
-                                <li><a href="/landing/">Dean Page</a></li>
+                            {% if user|has_group:'Dean' %}
+                                <li><a href={% url 'TUTRReg:landing' %}>Dean Page</a></li>
                             {% elif user|has_group:'Registrar' %}
-                                <li><a href="/landing/">Registrar Page</a></li>
-                            {% elif user|has_group:'Head Registrar' %}
-                                <li><a href="/landing/">Reg. Head Page</a></li>
+                                <li><a href={% url 'TUTRReg:landing' %}>Registrar Page</a></li>
                             {% elif user|has_group:'Governor' %}
-                                <li><a href="/landing/">Governor Page</a></li>
+                                <li><a href={% url 'TUTRReg:landing' %}>Governor Page</a></li>
                             {% else %}
-                                <li><a href="/landing/">Unknown Page</a></li>
+                                <li><a href={% url 'TUTRReg:landing' %}>Student Page</a></li>
                             {% endif %}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,7 +64,10 @@
                             </li>
                             {% else %}
                             <li class="nav-item">
-                                    <a href="/accounts/login/">Login</a>
+                                    <a href={% url 'login' %}>Login</a>
+                             </li>
+                            <li class="nav-item">
+                                    <a href={% url 'TUTRReg:user_registration' %}>Register</a>
                              </li>
                     </ul>
                     </div>

@@ -1,4 +1,5 @@
 {% extends "TUTRReg/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -17,17 +18,8 @@
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
+{{form|crispy}}
+<p>Don't have an accoount? Create one <a href={% url 'TUTRReg:user_registration' %}>here</a></p>
 <input type="submit" value="login">
 <input type="hidden" name="next" value="{{ next }}">
 </form>

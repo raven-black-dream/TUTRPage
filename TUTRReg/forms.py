@@ -1,6 +1,7 @@
-from django.forms import ModelForm, BaseModelFormSet, BooleanField, modelformset_factory
-
-from TUTRReg.models import Event, Class, Person,  Attendance
+from django.forms import ModelForm, BaseModelFormSet, BooleanField, modelformset_factory, EmailField
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from TUTRReg.models import Event, Class, Person, Attendance
 
 
 class EventForm(ModelForm):
@@ -80,5 +81,9 @@ class AttendanceFormSet(BaseAttendanceFormSet):
         return super(AttendanceFormSet, self)._construct_form(*args, **kwargs)
 
 
+class RegistrationForm(UserCreationForm):
+    email = EmailField()
 
-
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
