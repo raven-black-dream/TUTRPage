@@ -19,7 +19,6 @@
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 {{form|crispy}}
-<p>Don't have an accoount? Create one <a href={% url 'TUTRReg:user_registration' %}>here</a></p>
 <input type="submit" value="login">
 <input type="hidden" name="next" value="{{ next }}">
 </form>

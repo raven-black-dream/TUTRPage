@@ -26,6 +26,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'psyhv#@-%c61-j&p-3%4a*nry929wk
 
 # Local Dev setting
 # DATABASE_URL = os.environ.get('DATABASE_URL_MSQL')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
@@ -99,13 +100,13 @@ DATABASES = {
 }
 
 # Production Version
-# db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(conn_max_age=500)
 
 # Local Development on Prod Data
 # db_from_env = dj_database_url.parse(url=DATABASE_URL, conn_max_age=500)
 
 # Connect to one of the above
-# DATABASES['default'].update(db_from_env)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
