@@ -24,6 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'psyhv#@-%c61-j&p-3%4a*nry929wkr=&@kdak!1rt^pzs10k9')
 
+# Local Dev setting
+# DATABASE_URL = os.environ.get('DATABASE_URL_MSQL')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
@@ -41,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'simple_history',
+    'crispy_forms'
+
 ]
 
 MIDDLEWARE = [
@@ -81,18 +85,27 @@ LOGIN_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+
+# Local Development on Local Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tutr_test',
-        'USER': 'root',
-        'PASSWORD': 'Raitze1104',
-        'HOST': '127.0.0.1',
-        'PORT': '3307'
+        'USER': 'evan',
+        'PASSWORD': 'R@itze1104',
+        'HOST': '192.168.1.65',
+        'PORT': '3306'
     }
 }
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
+# Production Version
+# db_from_env = dj_database_url.config(conn_max_age=500)
+
+# Local Development on Prod Data
+# db_from_env = dj_database_url.parse(url=DATABASE_URL, conn_max_age=500)
+
+# Connect to one of the above
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -138,7 +151,17 @@ LOGOUT_REDIRECT_URL = '/'
 
 INTERNAL_IPS = ['127.0.0.1', ]
 
+# Local Development Settings
+# SECURE_SSL_REDIRECT = False
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SECURE_REFERRER_POLICY = 'origin-when-cross-origin'
+
+# Prod Settings
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_REFERRER_POLICY = 'origin-when-cross-origin'
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

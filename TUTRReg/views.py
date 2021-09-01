@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.db.models import Q, Sum
 
-from .models import Event, Session, Class, Course, Attendance, Person, User
-from .forms import EventForm, ClassForm, PersonForm, AttendanceFormSet, RegistrationForm
+from .models import Event, Session, Class, Course, Attendance, Person, User, Degree, Major
+from .forms import EventForm, ClassForm, PersonForm, AttendanceForm, AttendanceFormSet, RegistrationForm
 from datetime import datetime
 # Create your views here.
 
@@ -70,7 +70,7 @@ def attendance(request, *args, **kwargs):
             formset.save()
     else:
         formset = AttendanceFormSet(session_id=kwargs['session_id'])
-        context={'formset': formset, 'session_id': kwargs['session_id'], 'class_id': kwargs['class_id']}
+        context = {'formset': formset, 'session_id': kwargs['session_id'], 'class_id': kwargs['class_id']}
     return render(request, 'TUTRReg/attendance.html', context=context)
 
 
@@ -225,7 +225,17 @@ class EventClassDetail(generic.DetailView):
         return context
 
 
-class CourseDetail(generic.DetailView):
+class CourseList(LoginRequiredMixin, generic.ListView):
+    model = Course
+    template_name = 'TUTRReg/course.html'
+    context_object_name = 'CourseList'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CourseList, self).get_context_data(**kwargs)
+        context['courses'] = Course.objects.all()
+
+
+class CourseDetail(LoginRequiredMixin, generic.DetailView):
     model = Course
     template_name = 'TUTRReg/course.html'
     context_object_name = 'CourseDetails'
@@ -274,23 +284,111 @@ class AddPersonView(LoginRequiredMixin, generic.ListView):
         if query is None:
             object_list = Person.objects.all()
         else:
-            object_list = Person.objects.filter(Q(first_name__icontains=query)|
-                                                Q(last_name__icontains=query)|
+            object_list = Person.objects.filter(Q(first_name__icontains=query) |
+                                                Q(last_name__icontains=query) |
                                                 Q(sca_name__icontains=query))
         return object_list
 
 
-class AttendanceView(generic.ListView):
+class UpdateCourseView(LoginRequiredMixin, generic.UpdateView):
+    template_name = ''
+    login_url = '/accounts/login'
+    redirect_field_name = ''
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateCourseView, self).get_context_data(**kwargs)
+        context['course_id'] = self.kwargs['course_id']
+        context['course'] = Course.objects.filter(pk=context['course_id']).first()
+
+
+class DegreeList(LoginRequiredMixin, generic.ListView):
+    model = Degree
+    template_name = 'TUTRReg/degree_list.html'
+    context_object_name = 'DegreeList'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(DegreeList, self).get_context_data(**kwargs)
+        context['degrees'] = Degree.objects.all()
+        return context
+
+
+class DegreeDetail(LoginRequiredMixin, generic.DetailView):
+    model = Degree
+    template_name = 'TUTRReg/degree.html'
+    context_object_name = 'DegreeDetails'
+
+    def get_context_data(self, **kwargs):
+        context = super(DegreeDetail, self).get_context_data(**kwargs)
+        context['degree'] = Degree.objects.filter(pk=kwargs['pk']).first()
+        context['majors'] = Major.objects.filter(degree_cd_id=kwargs['pk']).all()
+        return context
+
+
+class MajorList(LoginRequiredMixin, generic.ListView):
+    model = Major
+    template_name = 'TUTRReg/major_list.html'
+    context_object_name = 'MajorList'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(MajorList, self).get_context_data(**kwargs)
+        context['degrees'] = Major.objects.all()
+        return context
+
+
+class MajorDetail(LoginRequiredMixin, generic.DetailView):
+    model = Major
+    template_name = 'TUTRReg/major.html'
+    context_object_name = 'MajorDetails'
+
+    def get_context_data(self, **kwargs):
+        context = super(MajorDetail, self).get_context_data(**kwargs)
+        context['degree'] = Major.objects.filter(pk=kwargs['pk']).first()
+        context['majors'] = Course.objects.filter(major_id=kwargs['pk']).all()
+        return context
+
+
+class AttendanceView(generic.FormView):
     model = Session
+    form_class = AttendanceForm
     template_name = 'TUTRReg/attendance.html'
-    context_object_name = 'ClassList'
+
+    def get_form(self, form_class=None):
+        form = super(AttendanceView, self).get_form(form_class)
+        form_data = Session.objects.filter(pk=self.kwargs['pk']).first()
+        form.fields['event_id'].initial = form_data.event_id_id
+        form.fields['class_id'].initial = form_data.class_id_id
+        return form
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AttendanceView, self).get_context_data(**kwargs)
         context['session_id'] = self.kwargs['pk']
+        student_data = Attendance.objects.filter(session_id=self.kwargs['pk']).all()
+        students = []
+        for row in student_data:
+            students.append({
+                'session_id': row.session_id,
+                'person_id': row.person_id,
+                'attended': row.attended,
+                'passed': row.passed
+            })
+        if self.request.POST:
+            context['students'] = AttendanceFormSet(self.request.POST)
+        else:
+            context['students'] = AttendanceFormSet(initial=students)
+            context['students'].extra = len(students)
         return context
 
-    def get_queryset(self, *args, **kwargs):
-        return Attendance.objects.filter(session_id=self.kwargs['pk'])
+    def form_valid(self, form):
+        context = self.get_context_data()
+        students = context['students']
+        form = context['form']
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+
+            for student in students:
+                student_instance = student.save(commit=False)
+                student_instance.save()
+        return super().form_valid(form)
 
 

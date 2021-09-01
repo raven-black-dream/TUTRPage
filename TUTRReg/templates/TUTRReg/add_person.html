@@ -11,6 +11,7 @@
     </div>
     <div class="section">
     <form action="{% url 'TUTRReg:create_person' %}" method="post">
+        {% csrf_token %}
         <button type="submit" class="save btn btn-default">Create Person</button>
     </form>
     <table id="details_table">

@@ -49,7 +49,7 @@
                         <td>{{ class.class_id.cost }}</td>
                         {% if open and user.is_authenticated %}
                         {% endif %}
-                        {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+                        {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Session Steward' %}
                             <td>
                             <form action="{% url 'TUTRReg:remove_class' event_id=object.pk session_id=class.pk %}" method="post">
                             {% csrf_token %}
@@ -62,7 +62,7 @@
                 {% endif %}
                 </tbody>
             </table>
-            {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+            {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Session Stewar' %}
                 <form action="{% url 'TUTRReg:edit_event' pk=object.pk %}" method="get">
                     {% csrf_token %}
                     <button type="submit" class="save btn btn-default">Edit Event</button>

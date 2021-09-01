@@ -1,4 +1,5 @@
 ﻿{% extends 'TUTRReg/base.html' %}
+{% load tutr_extras %}
 {% load crispy_forms_tags %}
 {% block content %}
     <h2>Add Classes to {{ event.event_name }} in {{ event.branch_id }}</h2>
@@ -11,9 +12,12 @@
         </form>
     </div>
     <div class="section">
+    {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean' %}
     <form action="{% url 'TUTRReg:new_class' %}" method="post">
-        <button type="submit" class="save btn btn-default">Create Person</button>
+        {% csrf_token %}
+        <button type="submit" class="save btn btn-default">Create Class</button>
     </form>
+    {% endif %}
     <table id="details_table">
     <thead>
     <th>

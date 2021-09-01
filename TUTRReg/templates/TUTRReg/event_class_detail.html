@@ -11,7 +11,7 @@
             <p>Student Requirements: {{ EventClassDetails.student_reqs }}</p>
             <p>Cost: {{ EventClassDetails.cost }}</p>
         </div>
-        {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+        {% if user.is_authenticated and user|has_group:'Registrar, Governer, Dean, Session Steward' %}
         <div>
             <form action="{% url 'TUTRReg:attendance' pk=session_id%}" method="get">
                 <button type="submit" class="save btn btn-default">View Roster</button>

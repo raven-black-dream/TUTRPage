@@ -1,10 +1,14 @@
-from django.forms import ModelForm, BaseModelFormSet, BooleanField, modelformset_factory, EmailField
+from django import forms
+from django.forms.models import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from TUTRReg.models import Event, Class, Person, Attendance
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Fieldset, Div, HTML, ButtonHolder, Submit
+from TUTRReg.models import Event, Class, Person, Attendance, Session
+from .layout import *
 
 
-class EventForm(ModelForm):
+class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ('event_name',
@@ -19,7 +23,7 @@ class EventForm(ModelForm):
                   'postal_cd')
 
 
-class ClassForm(ModelForm):
+class ClassForm(forms.ModelForm):
     class Meta:
         model = Class
         fields = ('class_name',
@@ -36,7 +40,7 @@ class ClassForm(ModelForm):
                   'teacher')
 
 
-class PersonForm(ModelForm):
+class PersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ('sca_name',
@@ -50,39 +54,38 @@ class PersonForm(ModelForm):
                   'active')
 
 
-class AttendanceForm(ModelForm):
-    attended = BooleanField()
-    passed = BooleanField
-
+class AttendanceForm(forms.ModelForm):
     class Meta:
-        model = Attendance
-        fields = ('person_id',
-                  'attended',
-                  'passed')
+        model = Session
+        fields = ['start_time', 'end_time', 'class_id', 'event_id']
 
     def __init__(self, *args, **kwargs):
-        self.session_id = kwargs['session_id']
         super(AttendanceForm, self).__init__(*args, **kwargs)
-        self.fields['person_id'].queryset = Attendance.objects.filter(session_id=self.session_id)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3 create-label'
+        self.helper.field_class = 'col-md-9'
+        self.helper.layout = Layout(
+            Div(
+                Field('class_id'),
+                Field('event_id'),
+                Field('start_time'),
+                Field('end_time'),
+                Fieldset('Students',
+                         Formset('students')),
+                HTML('<br>'),
+                ButtonHolder(Submit('submit', 'save'))
+            )
+        )
 
 
-BaseAttendanceFormSet = modelformset_factory(Attendance, form=AttendanceForm, extra=1, can_delete=False)
-
-
-class AttendanceFormSet(BaseAttendanceFormSet):
-    def __init__(self, *args, **kwargs):
-        self.person_id = kwargs.pop('person_id')
-        super(AttendanceFormSet, self).__init__(*args, **kwargs)
-        for form in self.forms:
-            form.empty_permitted = False
-
-    def _construct_form(self, *args, **kwargs):
-        kwargs[person_id] = self.person_id
-        return super(AttendanceFormSet, self)._construct_form(*args, **kwargs)
+AttendanceFormSet = inlineformset_factory(Session, Attendance,
+                                          fields=('person_id', 'attended', 'passed'), can_delete=False)
 
 
 class RegistrationForm(UserCreationForm):
-    email = EmailField()
+    email = forms.EmailField()
 
     class Meta:
         model = User

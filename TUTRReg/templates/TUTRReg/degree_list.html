@@ -1,0 +1,27 @@
+{% extends 'TUTRReg/base.html' %}
+{% load tutr_extras %}
+
+{% block content %}
+    {% if DegreeList %}
+        <div id="degree_table">
+        <h2 align="center">Recent Events</h2>
+        <div class="degree_list">
+        < align="center" id="degrees">
+        <thead>
+        <tr class="even">
+            <th>Degree Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for degree in DegreeList %}
+            <tr>
+            <td>
+            <a href="{% url 'TUTRReg:degree_detail' degree.pk %}">{{ degree.degree_name }}</a>
+            </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </div>
+    {% endif %}
+
+{% endblock %}

@@ -111,7 +111,7 @@ class Event(models.Model):
     end_date = models.DateField('End Date')
     tutr_surcharge = models.DecimalField(max_digits=5, decimal_places=2)
     branch_id = models.ForeignKey(Branch, on_delete=models.PROTECT)
-    dean = models.ForeignKey(Person, null=True, on_delete=models.PROTECT)
+    dean = models.ForeignKey(Person, null=True, blank=True, on_delete=models.PROTECT)
     location_name = models.CharField(null=True, max_length=100)
     apt_num = models.CharField(null=True, max_length=10)
     street = models.CharField(null=True, max_length=200)

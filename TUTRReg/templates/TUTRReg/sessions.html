@@ -65,7 +65,7 @@
         </table>
         {% else %}
             {% if user.is_authenticated %}
-            {% if  user|has_group:'Registrar, Governer, Dean, Head Registrar' %}
+            {% if  user|has_group:'Registrar, Governer, Dean, Session Steward' %}
                 <form>
                 <button formaction="{% url 'TUTRReg:new_event' %}">Add Event</button>
                 </form>
