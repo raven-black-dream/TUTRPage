@@ -6,6 +6,7 @@
     <form method="post">
         {% if students %}
             {% csrf_token %}
+            {{ students.management_form|crispy }}
             {% crispy form %}
         {% endif %}
     </form>

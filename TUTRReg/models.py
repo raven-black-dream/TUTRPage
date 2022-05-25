@@ -16,7 +16,7 @@ class Principality(models.Model):
 
 class Branch(models.Model):
     branch_name = models.CharField(max_length=100)
-    principality = models.ForeignKey(Principality, on_delete=models.PROTECT)
+    principality = models.ForeignKey(Principality, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.branch_name
@@ -33,7 +33,7 @@ class DegreeType(models.Model):
 
 class Degree(models.Model):
     degree_name = models.CharField(max_length=100)
-    degree_cd = models.ForeignKey(DegreeType, on_delete=models.PROTECT, default=1)
+    degree_cd = models.ForeignKey(DegreeType, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
@@ -42,7 +42,7 @@ class Degree(models.Model):
 
 class Major(models.Model):
     major_name = models.CharField(max_length=100)
-    degree_cd = models.ForeignKey(Degree, on_delete=models.PROTECT, default=1)
+    degree_cd = models.ForeignKey(Degree, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.major_name
@@ -50,7 +50,7 @@ class Major(models.Model):
 
 class Course(models.Model):
     course_name = models.CharField(max_length=100)
-    major = models.ForeignKey(Major, on_delete=models.PROTECT)
+    major = models.ForeignKey(Major, on_delete=models.DO_NOTHING)
     hours = models.DecimalField(max_digits=3, decimal_places=1)
     credits = models.IntegerField()
     approved = models.BooleanField()

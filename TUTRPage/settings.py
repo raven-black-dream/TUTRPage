@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import simple_history
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,7 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'psyhv#@-%c61-j&p-3%4a*nry929wkr=&@kdak!1rt^pzs10k9')
 
 # Local Dev setting
-# DATABASE_URL = os.environ.get('DATABASE_URL_MSQL')
+DATABASE_URL = os.environ.get('DATABASE_URL_MYSQL')
+DATABASE_URL_MONGO = os.environ.get('MONGODB_DB_URL')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
@@ -100,13 +100,27 @@ DATABASES = {
 }
 
 # Production Version
-db_from_env = dj_database_url.config(conn_max_age=500)
-
+# db_from_env = dj_database_url.config(url=DATABASE_URL, conn_max_age=500)
+# DATABASES['default'].update(db_from_env)
+MONGO = False
 # Local Development on Prod Data
-# db_from_env = dj_database_url.parse(url=DATABASE_URL, conn_max_age=500)
+if not MONGO:
+    db_from_env = dj_database_url.parse(url=DATABASE_URL, conn_max_age=500)
 
-# Connect to one of the above
-DATABASES['default'].update(db_from_env)
+    # Connect to one of the above
+    DATABASES['default'].update(db_from_env)
+# else:
+    # DATABASES['default'] = {
+        # 'ENGINE': 'djongo',
+        # 'NAME': 'tutr_records',
+        # 'CLIENT': {
+        #    'host': 'testdatabasecluster.0laj2.mongodb.net',
+        #    'username': 'evharley',
+        #   'password': 'IZVEfEcjvknz6oCG'
+        #},
+    #}
+
+
 
 
 # Password validation
@@ -153,16 +167,16 @@ LOGOUT_REDIRECT_URL = '/'
 INTERNAL_IPS = ['127.0.0.1', ]
 
 # Local Development Settings
-# SECURE_SSL_REDIRECT = False
-# SESSION_COOKIE_SECURE = False
-# CSRF_COOKIE_SECURE = False
-# SECURE_REFERRER_POLICY = 'origin-when-cross-origin'
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_REFERRER_POLICY = 'origin-when-cross-origin'
 
 # Prod Settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_REFERRER_POLICY = 'origin-when-cross-origin'
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_REFERRER_POLICY = 'origin-when-cross-origin'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

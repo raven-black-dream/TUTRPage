@@ -29,7 +29,7 @@ def register(request, *args, **kwargs):
     if request.POST:
         person = Person.objects.get(pk=kwargs['person_id'])
         session = Session.objects.get(pk=kwargs['session_id'])
-        registration = Attendance.objects.create(session_id=session, person_id=person)
+        registration = Attendance.objects.create(session_id=session, person_id=person, attended=False, passed=False)
         event = session.pk
         registration.save()
 
@@ -129,7 +129,7 @@ class CreateClassView(LoginRequiredMixin, generic.CreateView):
     template_name = 'TUTRReg/edit_class.html'
     form_class = ClassForm
     login_url = '/accounts/login/'
-    redirect_field_name = ''
+    success_url = '/sessions/'
 
     def form_valid(self, form):
         cls = form.save(commit=False)
@@ -156,7 +156,7 @@ class CreatePersonView(LoginRequiredMixin, generic.CreateView):
     template_name = 'TUTRReg/edit_person.html'
     form_class = PersonForm
     login_url = '/accounts/login/'
-    redirect_field_name = ''
+    success_url = '/sessions/'
 
     def form_valid(self, form):
         person = form.save(commit=False)
@@ -183,10 +183,10 @@ class SessionView(generic.ListView):
     context_object_name = 'EventList'
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        one_year_ago = timezone.now() - timezone.timedelta(days=365)
+        one_year_ago = timezone.now() - timezone.timedelta(days=(365 * 4))
         context = super(SessionView, self).get_context_data(**kwargs)
-        context['past_events'] = Event.objects.filter(start_date__gte=one_year_ago, start_date__lte=timezone.now())
-        context['future_events'] = Event.objects.filter(start_date__gte=timezone.now())
+        context['past_events'] = Event.objects.filter(start_date__gte=one_year_ago, start_date__lte=timezone.now()).order_by('start_date')
+        context['future_events'] = Event.objects.filter(start_date__gte=timezone.now()).order_by('start_date')
         return context
 
 
@@ -357,12 +357,15 @@ class AttendanceView(generic.FormView):
         form_data = Session.objects.filter(pk=self.kwargs['pk']).first()
         form.fields['event_id'].initial = form_data.event_id_id
         form.fields['class_id'].initial = form_data.class_id_id
+        form.fields['start_time'].initial = form_data.start_time
+        form.fields['end_time'].initial = form_data.end_time
         return form
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AttendanceView, self).get_context_data(**kwargs)
         context['session_id'] = self.kwargs['pk']
         student_data = Attendance.objects.filter(session_id=self.kwargs['pk']).all()
+        instance = Session.objects.filter(pk=self.kwargs['pk']).first()
         students = []
         for row in student_data:
             students.append({
@@ -372,9 +375,9 @@ class AttendanceView(generic.FormView):
                 'passed': row.passed
             })
         if self.request.POST:
-            context['students'] = AttendanceFormSet(self.request.POST)
+            context['students'] = AttendanceFormSet(self.request.POST, instance=instance)
         else:
-            context['students'] = AttendanceFormSet(initial=students)
+            context['students'] = AttendanceFormSet(initial=students, instance=instance)
             context['students'].extra = len(students)
         return context
 
@@ -384,11 +387,20 @@ class AttendanceView(generic.FormView):
         form = context['form']
         if form.is_valid():
             instance = form.save(commit=False)
+            instance.pk = Session.objects.filter(pk=self.kwargs['pk']).first().pk
             instance.save()
 
             for student in students:
-                student_instance = student.save(commit=False)
-                student_instance.save()
+                if student.is_valid():
+                    student_instance = student.save(commit=False)
+                    student_instance.save()
+                else:
+                    print(student.errors)
+
         return super().form_valid(form)
+
+    def get_success_url(self):
+        event = Session.objects.filter(pk=self.kwargs['pk']).first().event_id
+        return reverse('TUTRReg:event_detail', kwargs={'pk': event.pk})
 
 

@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Fieldset, Div, HTML, ButtonHolder, Submit
-from TUTRReg.models import Event, Class, Person, Attendance, Session
+from TUTRReg.models import Event, Class, Course, Person, Attendance, Session
 from .layout import *
 
 
@@ -38,6 +38,10 @@ class ClassForm(forms.ModelForm):
                   'description',
                   'pre_reqs',
                   'teacher')
+
+    def __init__(self, *args, **kwargs):
+        super(ClassForm, self).__init__(*args, **kwargs)
+        self.fields['course_id'].queryset = Course.objects.order_by('course_name')
 
 
 class PersonForm(forms.ModelForm):
@@ -81,7 +85,7 @@ class AttendanceForm(forms.ModelForm):
 
 
 AttendanceFormSet = inlineformset_factory(Session, Attendance,
-                                          fields=('person_id', 'attended', 'passed'), can_delete=False)
+                                          fields=('person_id', 'attended', 'passed',), can_delete=False, extra=0)
 
 
 class RegistrationForm(UserCreationForm):

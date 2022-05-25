@@ -24,7 +24,7 @@ urlpatterns = [
     path('faculty/', TemplateView.as_view(template_name='TUTRReg/faculty.html'), name='faculty'),
     path('degrees/', TemplateView.as_view(template_name='TUTRReg/degrees.html'), name='degrees'),
     path('degrees/list', views.DegreeList.as_view(), name='degree_list'),
-    path('degrees/<int:pk>', views.DegreeDetail, name='degree_detail'),
+    path('degrees/<int:pk>', views.DegreeDetail.as_view(), name='degree_detail'),
     path('faq/', TemplateView.as_view(template_name='TUTRReg/faq.html'), name='faq'),
     path('documents/', TemplateView.as_view(template_name='TUTRReg/docs.html'), name='documents'),
     path('links/', TemplateView.as_view(template_name='TUTRReg/links.html'), name='links'),

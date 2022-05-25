@@ -2,8 +2,10 @@ dj-database-url
 django
 django-crispy-forms
 django-simple-history
+djongo
 gunicorn
 mysql-connector-python
 mysqlclient
+psycopg2-binary
 whitenoise
 setuptools
