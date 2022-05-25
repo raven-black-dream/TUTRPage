@@ -100,7 +100,7 @@ DATABASES = {
 }
 
 # Production Version
-db_from_env = dj_database_url.config(url=DATABASE_URL, conn_max_age=500)
+db_from_env = dj_database_url.config(DATABASE_URL, conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 MONGO = False
 # Local Development on Prod Data
