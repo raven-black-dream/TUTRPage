@@ -4,8 +4,7 @@ django-crispy-forms
 django-simple-history
 djongo
 gunicorn
-mysql-connector-python
 mysqlclient
-psycopg2-binary
+pip == 22.1.1
 whitenoise
 setuptools
