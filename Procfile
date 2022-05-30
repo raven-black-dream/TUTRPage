@@ -1,1 +1,1 @@
-web: gunicorn TUTRPage.wsgi --log-file -
+web: gunicorn TUTRPage.wsgi --log-file --log-level debug
