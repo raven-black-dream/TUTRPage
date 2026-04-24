@@ -5,6 +5,6 @@ django-simple-history
 djongo
 gunicorn
 mysqlclient
-pip == 23.3
+pip == 26.0.1
 whitenoise
 setuptools
